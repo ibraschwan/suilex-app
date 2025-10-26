@@ -1,26 +1,383 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* Color palette for Suilex marketplace */
+  --color-primary: #2B9DF4;
+  --color-primary-hover: #3A82F6;
+  --color-secondary: #8B5CF6;
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-background-light: #f6f7f8;
+  --color-background-dark: #000000;
+  --color-surface-dark: #0a0a0a;
+  --color-surface-glass: rgba(255, 255, 255, 0.05);
+  --color-border-dark: #1a1a1a;
+  --color-border-glass: rgba(255, 255, 255, 0.1);
+  --color-text-primary-dark: #ffffff;
+  --color-text-secondary-dark: #a0a0a0;
+  --color-text-muted: #6b7280;
+
+  /* Font families */
+  --font-family-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-family-mono: 'Fira Code', ui-monospace, monospace;
+
+  /* Typography scale */
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.25rem;
+  --font-size-2xl: 1.5rem;
+  --font-size-3xl: 1.875rem;
+  --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+
+  /* Spacing scale */
+  --spacing-xs: 0.5rem;
+  --spacing-sm: 0.75rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 3rem;
+  --spacing-3xl: 4rem;
+
+  /* Border radius */
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@layer base {
+  body {
+    background: linear-gradient(to bottom, #0a0a0a 0%, #1a2847 40%, #2563eb 100%);
+    background-attachment: fixed;
+    color: var(--color-text-primary-dark);
+    font-family: var(--font-family-display);
+    min-height: 100vh;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  /* Glassmorphism utilities */
+  .glass-card {
+    background: var(--color-surface-glass);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--color-border-glass);
+  }
+
+  .glass-card-hover {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .glass-card-hover:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(43, 157, 244, 0.3);
+    box-shadow: 0 4px 24px rgba(43, 157, 244, 0.15);
+    transform: translateY(-4px);
+  }
+
+  /* Card with prominent hover lift */
+  .card-lift {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 12px 40px rgba(43, 157, 244, 0.2);
+  }
+
+  /* Radial gradient background */
+  .radial-gradient-hero {
+    background: radial-gradient(
+      ellipse 70% 50% at 50% 45%,
+      rgba(255, 255, 255, 0.18) 0%,
+      rgba(43, 157, 244, 0.08) 25%,
+      rgba(255, 255, 255, 0.03) 50%,
+      transparent 75%
+    );
+  }
+
+  /* Smooth fade-in animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+
+  /* Blue glow effect */
+  .blue-glow {
+    box-shadow: 0 0 20px rgba(43, 157, 244, 0.3);
+  }
+
+  .blue-glow-soft {
+    box-shadow: 0 0 30px rgba(43, 157, 244, 0.15);
+  }
+
+  /* Category badge colors */
+  .badge-medical {
+    background: rgba(139, 92, 246, 0.1);
+    color: #c4b5fd;
+    border: 1px solid rgba(139, 92, 246, 0.2);
+  }
+
+  .badge-finance {
+    background: rgba(245, 158, 11, 0.1);
+    color: #fcd34d;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+  }
+
+  .badge-code {
+    background: rgba(59, 130, 246, 0.1);
+    color: #93c5fd;
+    border: 1px solid rgba(59, 130, 246, 0.2);
+  }
+
+  .badge-legal {
+    background: rgba(34, 197, 94, 0.1);
+    color: #86efac;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+  }
+
+  .badge-literature {
+    background: rgba(236, 72, 153, 0.1);
+    color: #f9a8d4;
+    border: 1px solid rgba(236, 72, 153, 0.2);
+  }
+
+  /* Holographic gradient effect for trading cards */
+  .holo-gradient {
+    background: linear-gradient(
+      135deg,
+      rgba(43, 157, 244, 0.3) 0%,
+      rgba(139, 92, 246, 0.3) 25%,
+      rgba(245, 158, 11, 0.3) 50%,
+      rgba(34, 197, 94, 0.3) 75%,
+      rgba(43, 157, 244, 0.3) 100%
+    );
+    background-size: 200% 200%;
+    animation: holo-shimmer 3s ease-in-out infinite;
+  }
+
+  @keyframes holo-shimmer {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  /* Holographic border effect */
+  .holo-border {
+    position: relative;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+
+  .holo-border::before {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(
+      135deg,
+      #2B9DF4 0%,
+      #8B5CF6 25%,
+      #F59E0B 50%,
+      #22C55E 75%,
+      #2B9DF4 100%
+    );
+    background-size: 200% 200%;
+    animation: holo-border-rotate 3s linear infinite;
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: -1;
+  }
+
+  @keyframes holo-border-rotate {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 200% 50%;
+    }
+  }
+
+  /* 3D card tilt effect */
+  .card-tilt {
+    transform-style: preserve-3d;
+    transition: transform 0.3s ease-out;
+  }
+
+  .card-tilt:hover {
+    transform: perspective(1000px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) scale3d(1.02, 1.02, 1.02);
+  }
+
+  /* Shimmer loading animation */
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  .shimmer {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.05) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+  }
+
+  /* Foil texture overlay for trading cards */
+  .foil-texture {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .foil-texture::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        135deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.1) 45%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.1) 55%,
+        transparent 100%
+      );
+    background-size: 200% 200%;
+    animation: foil-shine 3s ease-in-out infinite;
+    pointer-events: none;
+    opacity: 0.5;
+  }
+
+  @keyframes foil-shine {
+    0%, 100% {
+      transform: translate(-100%, -100%);
+    }
+    50% {
+      transform: translate(100%, 100%);
+    }
+  }
+
+  /* Smooth scale animation for cards */
+  .scale-on-hover {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .scale-on-hover:hover {
+    transform: scale(1.05);
+  }
+
+  /* Neon glow text effect */
+  .neon-text {
+    text-shadow:
+      0 0 10px rgba(43, 157, 244, 0.5),
+      0 0 20px rgba(43, 157, 244, 0.3),
+      0 0 30px rgba(43, 157, 244, 0.2);
+  }
+
+  /* Progress bar with gradient */
+  .progress-gradient {
+    background: linear-gradient(
+      90deg,
+      #2B9DF4 0%,
+      #8B5CF6 50%,
+      #22C55E 100%
+    );
+  }
+
+  /* Pulse animation for badges/notifications */
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 0 0 rgba(43, 157, 244, 0.7);
+    }
+    50% {
+      box-shadow: 0 0 0 10px rgba(43, 157, 244, 0);
+    }
+  }
+
+  .pulse-glow {
+    animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+
+  /* Trading card rarity borders */
+  .card-common {
+    border: 2px solid #6b7280;
+  }
+
+  .card-rare {
+    border: 2px solid #3b82f6;
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+
+  .card-epic {
+    border: 2px solid #8b5cf6;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+  }
+
+  .card-legendary {
+    border: 2px solid #f59e0b;
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+  }
+
+  /* Smooth scroll behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Custom scrollbar styling */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(43, 157, 244, 0.5);
+    border-radius: 4px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(43, 157, 244, 0.7);
+  }
 }
